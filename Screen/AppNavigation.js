@@ -9,11 +9,11 @@ import DrawerNavigation from './DrawerNavigation';
 
 const AppNavigation = createSwitchNavigator({
 
-    //Stack: StackNavigation,
+    Stack: StackNavigation,
 
     Drawer: DrawerNavigation,
 
-    //Tab: TabNavigation,
+    Tab: TabNavigation,
 
 });
 

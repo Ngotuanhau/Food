@@ -48,15 +48,23 @@ class LoadingScreen extends Component {
                     source={require('../../HinhAnh/Loading/4.jpg')}
                     resizeMode='cover'
                 >
-                    <View style={{ top: 55, }}>
-                        <Text style={{ color: '#000000', fontSize: 15, left: 20 }}>
+                    <View style={styles.Text}>
+                        <Text style={{
+                            color: '#000000',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            textAlign: 'right'
+                        }}>
                             A good laugh and a long sleep are the best cures
-                        </Text>
-                        <Text style={{ color: '#000000', fontSize: 15, left: 260 }}>
-                            in the doctor’s book.
+                                in the doctor’s book.
                         </Text>
 
-                        <Text style={{ color: '#000000', fontSize: 15, left: 240, top: 10 }}>
+                        <Text style={{
+                            color: '#000000',
+                            fontSize: 15,
+                            left: 240,
+                            top: 10
+                        }}>
                             – Irish Proverb
                         </Text>
                     </View>
@@ -71,8 +79,13 @@ class LoadingScreen extends Component {
                     source={require('../../HinhAnh/Loading/2.jpg')}
                     resizeMode='cover'
                 >
-                    <View style={{ top: 60, }}>
-                        <Text style={{ color: '#ffffff', fontSize: 15, left: 20 }}>
+                    <View style={styles.Text}>
+                        <Text style={{
+                            color: '#ffffff',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            textAlign: 'right'
+                        }}>
                             The groundwork for all happiness is good health.
                         </Text>
                         <Text style={{ color: '#ffffff', fontSize: 15, left: 240, top: 10 }}>
@@ -83,7 +96,8 @@ class LoadingScreen extends Component {
 
                     <Text style={styles.butonSkip}
                         onPress={this.onStart}
-                    >SKIP</Text>
+                    >SKIP
+                    </Text>
                 </ImageBackground>
 
                 <ImageBackground
@@ -92,8 +106,13 @@ class LoadingScreen extends Component {
                     resizeMode='cover'
                 >
 
-                    <View style={{ top: 60, }}>
-                        <Text style={{ color: '#ffffff', fontSize: 15, left: 10 }}>
+                    <View style={styles.Text}>
+                        <Text style={{
+                            color: '#ffffff',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            textAlign: 'right'
+                        }}>
                             Take care of your body. It's the only place you have to live
                         </Text>
                         <Text style={{ color: '#ffffff', fontSize: 15, left: 290, top: 10 }}>
@@ -123,22 +142,23 @@ const styles = StyleSheet.create({
 
     Container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-
-    slide: {
-        flex: 1,
-        backgroundColor: 'transparent',
+        position: 'relative',
         alignItems: 'center',
         justifyContent: 'center'
     },
 
     image: {
         flex: 1,
-        width: width,
-        height: height,
+        position: 'relative',
+    },
 
+    Text: {
+        position: 'absolute',
+        top: 55,
+        left: 0,
+        right: 0,
+        height: 80,
+        justifyContent: 'center'
     },
 
     button: {
@@ -146,18 +166,20 @@ const styles = StyleSheet.create({
         height: 39,
         backgroundColor: '#000000',
         left: 30,
-        bottom: -630,
+        bottom: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 20
+        borderRadius: 20,
+        position: 'absolute'
     },
 
     butonSkip: {
         color: '#B81616',
         fontWeight: 'bold',
         fontSize: 20,
+        position: 'absolute',
         left: 30,
-        bottom: -625,
+        bottom: 65,
         width: 50,
     }
 

@@ -8,7 +8,8 @@ import {
     Keyboard,
     Text,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    StatusBar
 } from 'react-native';
 //import firebase from 'react-native-firebase';
 
@@ -19,9 +20,7 @@ class SignupComponent extends Component {
     constructor(props) {
         super(props),
             this.state = {
-                //name: '',
                 email: '',
-                // number: '',
                 password: '',
             }
 
@@ -37,82 +36,48 @@ class SignupComponent extends Component {
 
             <ImageBackground style={styles.container}
                 source={(require('../../../HinhAnh/BackGound/login3.jpg'))}>
+                <StatusBar hidden={true} />
 
-                <TouchableWithoutFeedback style={styles.container}
-                    onPress={Keyboard.dismiss}>
+                <View style={styles.Logo}>
+                    <Text style={{
+                        fontSize: 100,
+                        color: '#000000',
+                        fontStyle: "italic",
+                    }}> Food</Text>
+                </View>
 
-                    <View style={styles.container}>
-                        <Text style={{
-                            fontSize: 100,
-                            color: '#000000',
-                            fontStyle: "italic",
-                            top: -50
-                        }}> Food</Text>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                        {/* <View style={styles.Form}>
+                    <View style={styles.Content}>
 
-                            <TextInput style={styles.textinput}
-                                returnKeyLabel='next'
-                                placeholder='User name'
-                                placeholderTextColor='#000000'
-                                autoCorrect={false}
-                                autoCapitalize='none'
-                                underlineColorAndroid='#000000'
-                                value={this.state.name}
-                                onChangeText={
-                                    (name) => { this.setState({ name }) }
-                                } />
+                        <TextInput style={styles.textinput}
+                            keyboardType='email-address'
+                            returnKeyLabel='next'
+                            placeholder='Email'
+                            placeholderTextColor='#000000'
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            underlineColorAndroid='#000000'
+                            value={this.state.email}
+                            onChangeText={
+                                (email) => { this.setState({ email }) }
+                            }
+                        />
 
-                        </View> */}
-
-                        <View style={styles.Form}>
-                            <TextInput style={styles.textinput}
-                                keyboardType='email-address'
-                                returnKeyLabel='next'
-                                placeholder='Email'
-                                placeholderTextColor='#000000'
-                                underlineColorAndroid='#000000'
-                                autoCorrect={false}
-                                autoCapitalize='none'
-                                value={this.state.email}
-                                onChangeText={
-                                    (email) => { this.setState({ email }) }
-                                } />
-                        </View>
-
-                        {/* <View style={styles.Form}>
-
-                            <TextInput style={styles.textinput}
-                                returnKeyLabel='next'
-                                placeholder='Phone number'
-                                keyboardType='phone-pad'
-                                underlineColorAndroid='#000000'
-                                placeholderTextColor='#000000'
-                                value={this.state.number}
-                                onChangeText={
-                                    (number) => { this.setState({ number }) }
-                                }>
-                            </TextInput>
-
-                        </View> */}
-
-                        <View style={styles.Form}>
-
-                            <TextInput style={styles.textinput}
-                                returnKeyLabel='go'
-                                placeholder='Password'
-                                secureTextEntry={true}
-                                placeholderTextColor='#000000'
-                                underlineColorAndroid='#000000'
-                                autoCorrect={false}
-                                autoCapitalize='none'
-                                value={this.state.password}
-                                onChangeText={
-                                    (password) => { this.setState({ password }) }
-                                }>
-                            </TextInput>
-
-                        </View>
+                        <TextInput style={styles.textinput}
+                            returnKeyLabel='go'
+                            placeholder='Password'
+                            secureTextEntry={true}
+                            placeholderTextColor='#000000'
+                            underlineColorAndroid='#000000'
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            value={this.state.password}
+                            onChangeText={
+                                (password) => { this.setState({ password }) }
+                            }
+                        >
+                        </TextInput>
 
                         <TouchableOpacity style={styles.Button} onPress={this.onLogin}>
                             <Text style={styles.ButtonText}>SIGN UP</Text>
@@ -122,22 +87,30 @@ class SignupComponent extends Component {
                 </TouchableWithoutFeedback>
 
             </ImageBackground >
+
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: width,
-        height: height,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
 
-    Form: {
-        width: width - 40,
-        height: 80,
-        justifyContent: 'center'
+    Logo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 2,
+        //backgroundColor: 'green'
+    },
+
+    Content: {
+        flex: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //backgroundColor: 'yellow'
     },
 
     textinput: {

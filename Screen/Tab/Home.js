@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-
     form: {
         height: 200 / 2,
         width: widthimage,

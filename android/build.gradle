@@ -9,11 +9,20 @@ buildscript {
         supportLibVersion = "27.1.1"
     }
     repositories {
-        google()
         jcenter()
+        google()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
+    
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.google.gms:google-services:4.2.0' // google-services plugin
+      
+        //implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+        //implementation 'com.facebook.android:facebook-android-sdk:4.x'
+       // implementation 'com.twitter.sdk.android:twitter-core:3.x'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,13 +30,14 @@ buildscript {
 }
 
 allprojects {
+  
     repositories {
-        google()
         mavenLocal()
+        google()
         jcenter()
-        maven {
+         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
+             url "$rootDir/../node_modules/react-native/android"
         }
     }
 }
