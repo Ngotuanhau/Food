@@ -7,7 +7,8 @@ import TabNavigation from '../Screen/TabNavigation'
 import Profile from '../Screen/Drawer/Profile'
 import Order from '../Screen/Drawer/Order'
 import Contas from '../Screen/Drawer/Contas'
-//import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase';
+
 //import LoginContainer from '../Module/Authentication/Component/LoginContainer';
 
 const routeConfigs = {
@@ -53,7 +54,7 @@ const CustomDrawerContentComponent = (props) => (
     }}
         forceInset={{ top: 'always', horizontal: 'never' }}>
         <ImageBackground source={require('../HinhAnh/BackGound/login5.jpg')}
-            style={{ flex: 1 }}
+            style={{ flex: 1, }}
         >
 
             <View style={{
@@ -71,13 +72,15 @@ const CustomDrawerContentComponent = (props) => (
                 </Text>
 
                 <View style={{
-                    width: 190,
-                    height: 190,
+                    width: 150,
+                    height: 150,
                     borderRadius: 160,
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     <Image style={{
-                        width: 190,
-                        height: 190,
+                        width: 150,
+                        height: 150,
                         borderRadius: 160,
                     }} source={require('../HinhAnh/Loading/5.jpg')} />
                 </View>
@@ -85,14 +88,20 @@ const CustomDrawerContentComponent = (props) => (
 
             <DrawerItems {...props} />
 
-            <Button onPress={() => this.props.navigation.navigate('login')}
+            {/* <Button onPress={() => this.props.navigation.navigate('login')} 
+        this.props.navigation.navigate('Login'))    
+        */}
+
+            <Button onPress={() => firebase.auth().signOut()}
                 style={{
                     backgroundColor: '#ffffff',
                     borderRadius: 18,
                     height: 45,
                     width: 100,
                     justifyContent: 'center',
-                    bottom: -90,
+                    alignItems: 'center',
+                    position: 'absolute',
+                    bottom: 10,
                     left: 90
                 }}>
 

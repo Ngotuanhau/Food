@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, StatusBar, ImageBackground, Dimensions, View, Image, Text, TouchableOpacity } from 'react-native';
 import { Container, Left, Title, Body, } from 'native-base';
 
+import firebase from 'react-native-firebase'
+
 import Navbar from '../../Component/Navbar'
 import IconMenu from '../../Component/IconMenu'
 
@@ -20,6 +22,14 @@ let body = (
 )
 
 class Profile extends Component {
+
+    state = { currentUser: null }
+
+    componentDidMount() {
+        const { currentUser } = firebase.auth()
+        this.setState({ currentUser })
+    }
+
     static navigationOptions = ({ navigation }) => ({
         header: <Navbar
             left={<Lefts drawerNavigation={navigation} />}
@@ -32,7 +42,7 @@ class Profile extends Component {
     }
 
     render() {
-
+        const { currentUser } = this.state
         return (
             <Container >
                 <StatusBar hidden={true} />
@@ -62,6 +72,9 @@ class Profile extends Component {
                         <Text style={styles.text}>Name</Text>
                         <Text style={styles.text}>Phone Number</Text>
                         <Text style={styles.text}>Address</Text>
+                        <Text>
+                            Hi {currentUser && currentUser.email}!
+                        </Text>
                     </View>
 
                     <TouchableOpacity onPress={this.onCurrentpass}>

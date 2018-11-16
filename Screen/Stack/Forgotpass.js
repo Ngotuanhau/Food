@@ -34,7 +34,6 @@ class Forgotpass extends Component {
             { cancelable: false }
         )
 
-
     }
 
     render() {
@@ -53,7 +52,8 @@ class Forgotpass extends Component {
                             color: '#000000',
                             fontStyle: "italic",
                             top: - 100
-                        }}> Food</Text>
+                        }}> Food
+                        </Text>
 
                         <View style={styles.Form}>
 
@@ -66,8 +66,7 @@ class Forgotpass extends Component {
                                 value={this.state.number}
                                 onChangeText={
                                     (number) => { this.setState({ number }) }
-                                }>
-                            </TextInput>
+                                } />
 
                         </View>
 

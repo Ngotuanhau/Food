@@ -9,9 +9,12 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StatusBar
+    StatusBar,
+    Alert,
 } from 'react-native';
-//import firebase from 'react-native-firebase';
+
+import { EMAIL, PASSWORD } from '../../../Component/regexs';
+import firebase from 'react-native-firebase';
 
 const { width, height } = Dimensions.get('window')
 
@@ -22,13 +25,73 @@ class SignupComponent extends Component {
             this.state = {
                 email: '',
                 password: '',
+                emailvalidated: true,
+                passwordvalidated: true,
             }
-
     }
 
-    onLogin = () => {
-        // firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-        //     .then(() => this.props.navigation.navigate('Login'))
+    validate(type, value) {
+        if (type == 'email') {
+            this.setState({ email: value })
+            if (value == '' || EMAIL.test(value)) {
+                this.setState({ emailvalidated: true })
+            } else {
+                this.setState({ emailvalidated: false })
+            }
+        } else if (type == 'password') {
+            this.setState({ password: value })
+            if (value == '' || PASSWORD.test(value)) {
+                this.setState({ passwordvalidated: true })
+            } else {
+                this.setState({ passwordvalidated: false })
+            }
+        }
+    }
+
+    // onSignup = () => {
+    //     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    //         .then(() => {
+    //             alert('Đăng kí thành công!!!')
+    //         },
+    //             (error) => {
+    //                 Alert.alert(error.message)
+    //             }
+    //         )
+
+    // }
+
+    onSignup = () => {
+        if (
+            this.state.emailvalidated &&
+            this.state.passwordvalidated &&
+            this.state.email != '' &&
+            this.state.password != '') {
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then(() => {
+                    alert('Register success!!!')
+                })
+                .catch((e) => alert(e))
+
+        } else {
+            if (this.state.email == '' && this.state.password == '') {
+                Alert.alert(
+                    'Register account',
+                    'Please enter email and password',
+                    [
+                        {
+                            text: 'OK', onPress: () => console.log('OK Pressed')
+                        },
+                    ],
+                    { cancelable: false }
+                )
+            }
+        }
+    }
+
+    moveLogin = () => {
+        this.props.navigation.navigate('Login')
     }
 
     render() {
@@ -50,7 +113,8 @@ class SignupComponent extends Component {
 
                     <View style={styles.Content}>
 
-                        <TextInput style={styles.textinput}
+                        <TextInput style={[styles.textinput, !this.state.emailvalidated]}
+                            // <TextInput style={styles.textinput}
                             keyboardType='email-address'
                             returnKeyLabel='next'
                             placeholder='Email'
@@ -59,12 +123,17 @@ class SignupComponent extends Component {
                             autoCapitalize='none'
                             underlineColorAndroid='#000000'
                             value={this.state.email}
+                            // onChangeText={
+                            //     (email) => { this.setState({ email }) }
+                            // }
+
                             onChangeText={
-                                (email) => { this.setState({ email }) }
+                                (email) => { this.validate('email', email) }
                             }
                         />
 
-                        <TextInput style={styles.textinput}
+                        <TextInput style={[styles.textinput, !this.state.passwordvalidated]}
+                            //  <TextInput style={styles.textinput} 
                             returnKeyLabel='go'
                             placeholder='Password'
                             secureTextEntry={true}
@@ -74,14 +143,19 @@ class SignupComponent extends Component {
                             autoCapitalize='none'
                             value={this.state.password}
                             onChangeText={
+                                (password) => { this.validate('password', password) }
+                            } />
+                        {/* onChangeText={
                                 (password) => { this.setState({ password }) }
-                            }
-                        >
-                        </TextInput>
+                            } /> */}
 
-                        <TouchableOpacity style={styles.Button} onPress={this.onLogin}>
+                        <TouchableOpacity style={styles.Button} onPress={this.onSignup}>
                             <Text style={styles.ButtonText}>SIGN UP</Text>
                         </TouchableOpacity>
+
+                        <Text style={styles.login}
+                            onPress={this.moveLogin}
+                        >Already have an account? Login</Text>
 
                     </View>
                 </TouchableWithoutFeedback>
@@ -102,21 +176,20 @@ const styles = StyleSheet.create({
     Logo: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 2,
-        //backgroundColor: 'green'
+        flex: 3,
     },
 
     Content: {
         flex: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: 'yellow'
     },
 
     textinput: {
         width: width - 40,
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 5,
     },
 
     Button: {
@@ -133,6 +206,13 @@ const styles = StyleSheet.create({
         fontSize: 23,
         color: '#E4D9D9',
     },
+
+    login: {
+        color: '#000000',
+        position: 'absolute',
+        bottom: 30,
+        fontSize: 15,
+    }
 
 })
 export default SignupComponent;

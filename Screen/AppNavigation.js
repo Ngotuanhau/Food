@@ -13,7 +13,7 @@ const AppNavigation = createSwitchNavigator({
 
     Drawer: DrawerNavigation,
 
-    Tab: TabNavigation,
+    //Tab: TabNavigation,
 
 });
 

@@ -6,6 +6,7 @@ import Forgotpass from './Stack/Forgotpass';
 import Confirmcode from './Stack/Confirmcode';
 import Chagnepass from './Stack/Chagnepass';
 import LoadingScreen from './Stack/LoadingScreen';
+//import Profile from './Drawer/Profile'
 
 const StackLogin = createStackNavigator({
 
@@ -50,6 +51,13 @@ const StackLogin = createStackNavigator({
             header: null
         }
     },
+
+    // Profile: {
+    //     screen: Profile,
+    //     navigationOptions: {
+    //         header: null,
+    //     }
+    // }
 
 })
 

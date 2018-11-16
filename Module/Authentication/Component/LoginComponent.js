@@ -9,35 +9,101 @@ import {
     ImageBackground,
     TouchableWithoutFeedback,
     Keyboard,
-    StatusBar
+    StatusBar,
+    Alert
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
-// import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase';
+import { EMAIL, PASSWORD } from '../../../Component/regexs'
 
 const { height, width } = Dimensions.get('window')
 
 class LoginComponent extends Component {
 
     constructor(props) {
-        super(props),
-            this.state = {
-                email: '',
-                name: '',
-                password: '',
-            }
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            emailvalidated: true,
+            passwordvalidated: true
+        }
     }
 
-    onLogin = () => {
-        this.props.navigation.navigate('Tab')
-        // firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-        //     .then(() => this.props.navigation.navigate('Tab'))
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            this.props.navigation.navigate(user ? 'Tab' : 'Login')
+        })
+    };
+
+    validate(type, value) {
+        if (type == 'email') {
+            this.setState({ email: value })
+            if (value == '' || EMAIL.test(value)) {
+                this.setState({ emailvalidated: true })
+            } else {
+                this.setState({ emailvalidated: false })
+            }
+        }
+        else if (type == 'password') {
+            this.setState({ password: value })
+            if (value == '' || PASSWORD.test(value)) {
+                this.setState({ passwordvalidated: true })
+            } else {
+                this.setState({ passwordvalidated: false })
+            }
+        }
     }
 
     // onLogin = () => {
-    //     const { email, password } = this.state;
-    //     this.props.login(email, password);
+    //     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    //         .then((user) =>
+    //             this.props.navigation.navigate('Tab')
+    //         )
+    //         .catch((e) => alert(e)
+    //         );
     // };
+
+    onLogin = () => {
+        if (
+            this.state.emailvalidated &&
+            this.state.passwordvalidated &&
+            this.state.email != '' &&
+            this.state.password != '') {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(this.state.email, this.state.password)
+                .then(() => {
+                    this.props.navigation.navigate('Tab')
+                })
+                .catch(function (error) {
+                    Alert.alert(
+                        'Login fail',
+                        'email or password invalid',
+                        [
+                            {
+                                text: 'OK', onPress: () => console.log('OK Pressed')
+                            },
+                        ],
+                        { cancelable: false }
+                    )
+                });
+        } else {
+            if (this.state.email == '' && this.state.password == '') {
+                Alert.alert(
+                    'Login',
+                    'Please enter email and password',
+                    [
+                        {
+                            text: 'OK', onPress: () => console.log('OK Pressed')
+                        },
+                    ],
+                    { cancelable: false }
+                )
+            }
+        }
+    }
 
     onSignup = () => {
         this.props.navigation.navigate('Signup')
@@ -48,6 +114,7 @@ class LoginComponent extends Component {
     }
 
     render() {
+
         return (
 
             <ImageBackground style={styles.container}
@@ -66,7 +133,7 @@ class LoginComponent extends Component {
 
                     <View style={styles.Content}>
 
-                        <TextInput style={styles.textinput}
+                        <TextInput style={[styles.textinput, !this.state.emailvalidated]}
                             keyboardType='email-address'
                             returnKeyLabel='next'
                             placeholder='Email'
@@ -75,12 +142,16 @@ class LoginComponent extends Component {
                             autoCapitalize='none'
                             underlineColorAndroid='#000000'
                             value={this.state.email}
+                            // onChangeText={
+                            //     (email) => { this.setState({ email }) }
+                            // } 
                             onChangeText={
-                                (email) => { this.setState({ email }) }
+                                (email) => { this.validate('email', email) }
                             }
                         />
 
-                        <TextInput style={styles.textinput}
+
+                        {/* <TextInput style={styles.textinput}
                             returnKeyLabel='next'
                             placeholder='User name'
                             placeholderTextColor='#000000'
@@ -90,9 +161,9 @@ class LoginComponent extends Component {
                             value={this.state.name}
                             onChangeText={
                                 (name) => { this.setState({ name }) }
-                            } />
+                            } /> */}
 
-                        <TextInput style={styles.textinput}
+                        <TextInput style={[styles.textinput, !this.state.passwordvalidated]}
                             returnKeyLabel='go'
                             placeholder='Password'
                             secureTextEntry={true}
@@ -101,11 +172,13 @@ class LoginComponent extends Component {
                             autoCorrect={false}
                             autoCapitalize='none'
                             value={this.state.password}
+                            // onChangeText={
+                            //     (password) => { this.setState({ password }) }
+                            // } 
                             onChangeText={
-                                (password) => { this.setState({ password }) }
+                                (password) => { this.validate('password', password) }
                             }
-                        >
-                        </TextInput>
+                        />
 
                         <Text onPress={this.onForgot}
                             style={{
@@ -114,7 +187,7 @@ class LoginComponent extends Component {
                                 marginLeft: -190,
                                 marginTop: 15,
                             }}> forgot your password
-                    </Text>
+                        </Text>
 
                         <TouchableOpacity style={styles.Button} onPress={this.onLogin}>
                             <Text style={styles.ButtonText}>LOGIN</Text>
@@ -125,9 +198,11 @@ class LoginComponent extends Component {
                                 color: '#000000',
                                 marginTop: 30,
                                 fontSize: 20,
-                            }}> Sign up</Text>
+                            }}> Sign up
+                        </Text>
 
                     </View>
+
                 </TouchableWithoutFeedback>
 
                 <View style={styles.iconbutton}>
@@ -146,9 +221,9 @@ class LoginComponent extends Component {
 
             </ImageBackground >
 
-
         );
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -161,7 +236,7 @@ const styles = StyleSheet.create({
     Logo: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 2
+        flex: 3,
     },
 
     Content: {
@@ -183,7 +258,8 @@ const styles = StyleSheet.create({
     textinput: {
         width: width - 40,
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 5
     },
 
     Button: {

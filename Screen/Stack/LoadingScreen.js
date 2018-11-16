@@ -5,9 +5,12 @@ import {
     Dimensions,
     Text,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import Swiper from 'react-native-swiper'
+
+// import firebase from 'react-native-firebase'
 
 const { width, height } = Dimensions.get('window')
 
